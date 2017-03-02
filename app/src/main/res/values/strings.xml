@@ -1,0 +1,35 @@
+<resources>
+    <string name="app_name">BooksMine</string>
+    <string name="hint_search">Search</string>
+
+    <string name="msg_error_search_books">Problem looking for books.</string>
+    <string name="msg_warning_no_results">No results for text searched.</string>
+
+    <string name="format_authors">Autores: %1$s</string>
+    <string name="format_pages">Páginas: %1$d</string>
+    <string name="format_publish_date">Data de publicação: %1$s</string>
+    <string name="bottom_add_collection">Add to Collection</string>
+    <string name="msg_error_adding_collection">Problem adding to collection, try again later.</string>
+    <string name="msg_success_adding_collection">Book added with sucess to collection!</string>
+    <string name="msg_book_already_in_collection">Book already in collection!</string>
+    <string name="dialog_title">Remove Book</string>
+    <string name="dialog_message">Remove %s from your collection?</string>
+    <string name="about_title"><![CDATA[Technologies (Frameworks & Libs)]]></string>
+    <string-array name="about_content_array">
+        <item>- Data Binding</item>
+        <item>- Google Books API</item>
+        <item>- Retrofit 2</item>
+        <item>- RxJava / RxAndroid</item>
+        <item>- RetroLambda (Java 8)</item>
+        <item>- Realm (database)</item>
+        <item>- Material Design</item>
+        <item> - Recycler View</item>
+        <item> - Floating Action Button</item>
+        <item>- EventBus</item>
+        <item>- GSON</item>
+        <item>- Picasso</item>
+        <item>- Android Support Libs</item>
+        <item>- Parceler</item>
+    </string-array>
+    <string name="about_diagram_title">Macro Architecture Diagram</string>
+</resources>

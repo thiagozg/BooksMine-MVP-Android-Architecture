@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:fitsSystemWindows="true"
+    tools:context="br.com.booksmine.view.activity.BookDetailActivity">
+
+    <data>
+        <import type="java.util.Arrays" />
+
+        <variable
+            name="book"
+            type="br.com.booksmine.model.pojo.Book" />
+    </data>
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:gravity="center_horizontal"
+            android:orientation="vertical"
+            android:padding="16dp">
+
+            <ImageView
+                android:id="@+id/ivCover"
+                android:layout_width="120dp"
+                android:layout_height="160dp"
+                android:src="@{book.volumeInfo.imageLinks.thumbnail}" />
+
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{book.volumeInfo.title}" />
+
+            <TextView
+                android:id="@+id/tvSubtitle"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{book.volumeInfo.subtitle}" />
+
+            <TextView
+                android:id="@+id/tvPublishers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{book.volumeInfo.publisher}" />
+
+            <TextView
+                android:id="@+id/tvAuthors"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{@string/format_authors(Arrays.toString(book.volumeInfo.authors))}" />
+
+            <TextView
+                android:id="@+id/tvYear"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{@string/format_publish_date(book.volumeInfo.publishedDate)}" />
+
+            <TextView
+                android:id="@+id/tvPages"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{@string/format_pages(book.volumeInfo.pageCount)}" />
+
+            <TextView
+                android:id="@+id/tvDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@{book.volumeInfo.description}" />
+
+            <Button
+                android:text="@string/bottom_add_collection"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/btAddCollection"
+                android:layout_marginTop="@dimen/activity_buttom_bottom"
+                android:layout_gravity="bottom"
+                android:onClick="addBookToCollection" />
+
+        </LinearLayout>
+    </ScrollView>
+
+</layout>
