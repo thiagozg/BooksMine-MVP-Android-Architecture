@@ -19,17 +19,18 @@ import rx.schedulers.Schedulers;
  * Google Play.:    https://play.google.com/store/apps/developer?id=Thiago+Giacomini
  */
 
-public class GoogleBookPresenter implements GoogleBookMVP.Presenter {
+public class GoogleBooksPresenter implements GoogleBookMVP.Presenter {
 
     private GoogleBookMVP.View view;
 
     private GoogleBookMVP.Model model;
 
-    public GoogleBookPresenter(GoogleBookMVP.View view) {
+    public GoogleBooksPresenter(GoogleBookMVP.View view) {
         this.view = view;
         this.model = new GoogleBooksAPI();
     }
 
+    @Override
     public void searchListOfBooks(String query) {
         Observable<SearchResult> result = model.searchListOfBooks(query);
         Subscription subscription = result

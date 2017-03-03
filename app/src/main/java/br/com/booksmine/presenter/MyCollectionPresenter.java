@@ -1,9 +1,17 @@
 package br.com.booksmine.presenter;
 
+import android.util.Log;
+
+import org.greenrobot.eventbus.EventBus;
+
 import br.com.booksmine.model.dao.CollectionDAO;
 import br.com.booksmine.model.realm.po.RealmBook;
 import br.com.booksmine.mvp.CollectionMVP;
 import io.realm.RealmResults;
+import rx.Observable;
+import rx.Subscription;
+import rx.android.schedulers.AndroidSchedulers;
+import rx.schedulers.Schedulers;
 
 /**
  * Developed by.:   @thiagozg on 23/02/2017.
@@ -15,13 +23,27 @@ public class MyCollectionPresenter implements CollectionMVP.GridPresenter {
 
     private CollectionMVP.Model model;
 
-    public MyCollectionPresenter() {
+    private CollectionMVP.GridView view;
+
+    public MyCollectionPresenter(CollectionMVP.GridView view) {
         this.model = new CollectionDAO();
+        this.view = view;
     }
 
     @Override
-    public RealmResults<RealmBook> getMyCollection() {
-        return this.model.getCollection();
+    public void getMyCollection() {
+        Observable<RealmResults<RealmBook>> results = this.model.getCollection();
+        Subscription subscription = results
+                .subscribeOn(AndroidSchedulers.mainThread())
+                .observeOn(AndroidSchedulers.mainThread())
+                .subscribe(
+                        realmResults -> EventBus.getDefault().postSticky(realmResults),
+                        throwable -> {
+                            view.showError();
+                            throwable.printStackTrace();
+                        },
+                        () -> Log.d("LOG", "getMyCollection complete!")
+                );
     }
 
     @Override

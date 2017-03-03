@@ -21,7 +21,7 @@ import br.com.booksmine.databinding.FragmentListBookBinding;
 import br.com.booksmine.model.pojo.Book;
 import br.com.booksmine.model.pojo.SearchResult;
 import br.com.booksmine.mvp.GoogleBookMVP;
-import br.com.booksmine.presenter.GoogleBookPresenter;
+import br.com.booksmine.presenter.GoogleBooksPresenter;
 import br.com.booksmine.view.adapter.GoogleBookAdapter;
 import br.com.booksmine.view.listener.ClickListener;
 
@@ -31,7 +31,7 @@ import br.com.booksmine.view.listener.ClickListener;
  * GitHub.:         https://github.com/thiagozg/
  * Google Play.:    https://play.google.com/store/apps/developer?id=Thiago+Giacomini
  */
-public class GoogleBookListFragment extends Fragment
+public class GoogleBooksListFragment extends Fragment
         implements GoogleBookMVP.View {
 
     private static GoogleBookMVP.View viewInstance;
@@ -40,16 +40,16 @@ public class GoogleBookListFragment extends Fragment
     private GoogleBookAdapter adapter;
     private FragmentListBookBinding binding;
 
-    public static GoogleBookListFragment getViewInstance() {
+    public static GoogleBooksListFragment getViewInstance() {
         if (viewInstance == null) {
-            viewInstance = new GoogleBookListFragment();
+            viewInstance = new GoogleBooksListFragment();
 
             if (presenter == null) {
-                presenter = new GoogleBookPresenter(viewInstance);
+                presenter = new GoogleBooksPresenter(viewInstance);
             }
         }
 
-        return (GoogleBookListFragment) viewInstance;
+        return (GoogleBooksListFragment) viewInstance;
     }
 
     @Override
@@ -122,8 +122,8 @@ public class GoogleBookListFragment extends Fragment
     }
 
     @Override
-    public void onDestroy() {
-        super.onDestroy();
+    public void onDestroyView() {
+        super.onDestroyView();
         EventBus.getDefault().unregister(this);
     }
 }

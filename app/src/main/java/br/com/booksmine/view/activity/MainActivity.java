@@ -17,7 +17,7 @@ import org.parceler.Parcels;
 import br.com.booksmine.R;
 import br.com.booksmine.model.pojo.Book;
 import br.com.booksmine.model.realm.po.RealmBook;
-import br.com.booksmine.view.fragment.GoogleBookListFragment;
+import br.com.booksmine.view.fragment.GoogleBooksListFragment;
 import br.com.booksmine.view.fragment.MyCollectionFragment;
 import br.com.booksmine.view.listener.ClickListener;
 import br.com.booksmine.view.listener.LongClickListener;
@@ -51,7 +51,8 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void showMyCollection() {
-        if (!this.searhActive) {
+//        if (!this.searhActive) {
+        if (!getIntent().getBooleanExtra("searhActive", false)) {
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.fragment_list, myCollectionFragment, "myCollection")
@@ -66,8 +67,10 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onQueryTextSubmit(String query) {
+        this.searchView.clearFocus();
         this.searhActive = true;
-        GoogleBookListFragment bookListFragment = GoogleBookListFragment.getViewInstance();
+        getIntent().putExtra("searhActive", true);
+        GoogleBooksListFragment bookListFragment = GoogleBooksListFragment.getViewInstance();
 
         if (!bookListFragment.isVisible() || !bookListFragment.isResumed()) {
             getSupportFragmentManager()
@@ -77,7 +80,6 @@ public class MainActivity extends AppCompatActivity
         }
 
         bookListFragment.searhByQuery(query);
-        this.searchView.clearFocus();
         return true;
     }
 

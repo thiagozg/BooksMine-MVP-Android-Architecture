@@ -3,8 +3,10 @@ package br.com.booksmine.mvp;
 import android.view.View;
 
 import br.com.booksmine.model.pojo.Book;
+import br.com.booksmine.model.pojo.SearchResult;
 import br.com.booksmine.model.realm.po.RealmBook;
 import io.realm.RealmResults;
+import rx.Observable;
 
 /**
  * Developed by.:   @thiagozg on 08/02/2017.
@@ -22,7 +24,7 @@ public interface CollectionMVP {
 
         int saveBook(Book book);
         RealmBook getBook(RealmBook book);
-        RealmResults<RealmBook> getCollection();
+        Observable<RealmResults<RealmBook>> getCollection();
         int removeBook(RealmBook realmBook);
         void openRealm();
         void closeRealm();
@@ -33,7 +35,9 @@ public interface CollectionMVP {
     }
 
     interface GridView {
+        void updateGridView();
         void removeBookFromMyCollection(RealmBook realmBook);
+        void showError();
     }
 
     interface AddPresenter {
@@ -42,7 +46,7 @@ public interface CollectionMVP {
     }
 
     interface GridPresenter {
-        RealmResults<RealmBook> getMyCollection();
+        void getMyCollection();
         int removeBook(RealmBook realmBook);
         void closeRealm();
     }

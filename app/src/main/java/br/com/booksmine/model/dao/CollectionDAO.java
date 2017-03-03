@@ -8,6 +8,7 @@ import br.com.booksmine.model.realm.util.RealmUtil;
 import br.com.booksmine.mvp.CollectionMVP;
 import io.realm.Realm;
 import io.realm.RealmResults;
+import rx.Observable;
 
 /**
  * Developed by.:   @thiagozg on 19/02/2017.
@@ -31,9 +32,9 @@ public class CollectionDAO implements CollectionMVP.Model {
         if (this.getBook(realmBook) == null) {
 
             try {
-                this.realm.executeTransaction(realm -> {
-                    realm.copyToRealmOrUpdate(realmBook);
-                });
+                this.realm.executeTransaction(
+                    realm -> realm.copyToRealmOrUpdate(realmBook)
+                );
 
                 result = PERSIST_OK;
             } catch (Exception e) {
@@ -48,14 +49,13 @@ public class CollectionDAO implements CollectionMVP.Model {
     }
 
     @Override
-    public RealmResults<RealmBook> getCollection() {
+    public Observable<RealmResults<RealmBook>> getCollection() {
         this.openRealm();
-        RealmResults<RealmBook> realmResults =
-                this.realm
-                        .where(RealmBook.class)
-                        .findAll();
 
-        return realmResults;
+        return this.realm
+                .where(RealmBook.class)
+                .findAll()
+                .asObservable();
     }
 
     @Override
@@ -67,8 +67,8 @@ public class CollectionDAO implements CollectionMVP.Model {
                         .equalTo(RealmBook.ID, realmBook.getId())
                         .findAll();
 
-        if (books.size() > 0) {
-            return books.get(0);
+        if (!books.isEmpty()) {
+            return books.first();
         }
 
         return null;
