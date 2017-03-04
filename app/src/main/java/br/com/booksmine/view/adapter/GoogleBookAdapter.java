@@ -8,7 +8,7 @@ import android.view.ViewGroup;
 import java.util.List;
 
 import br.com.booksmine.R;
-import br.com.booksmine.databinding.ItemBookBinding;
+import br.com.booksmine.databinding.ListItemBookBinding;
 import br.com.booksmine.model.pojo.Book;
 import br.com.booksmine.view.listener.ClickListener;
 
@@ -30,9 +30,9 @@ public class GoogleBookAdapter extends RecyclerView.Adapter<GoogleBookAdapter.Vi
 
     @Override
     public ViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        ItemBookBinding binding = DataBindingUtil.inflate(
+        ListItemBookBinding binding = DataBindingUtil.inflate(
                 LayoutInflater.from(parent.getContext()),
-                R.layout.item_book,
+                R.layout.list_item_book,
                 parent,
                 false
         );
@@ -63,9 +63,9 @@ public class GoogleBookAdapter extends RecyclerView.Adapter<GoogleBookAdapter.Vi
 
     public class ViewHolder extends RecyclerView.ViewHolder {
 
-        ItemBookBinding binding;
+        ListItemBookBinding binding;
 
-        public ViewHolder(ItemBookBinding binding) {
+        public ViewHolder(ListItemBookBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }

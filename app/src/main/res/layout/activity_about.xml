@@ -1,59 +1,75 @@
 <?xml version="1.0" encoding="utf-8"?>
-<layout xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:android="http://schemas.android.com/apk/res/android">
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
 
-    <RelativeLayout
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:paddingTop="20dp"
+        android:paddingBottom="20dp">
 
-        <TextView
-            android:id="@+id/tvContent"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/tvTitle"
-            android:layout_marginLeft="@dimen/fab_margin"
-            android:layout_marginRight="@dimen/fab_margin"
-            android:layout_marginTop="20dp"
-            android:text="temporary" />
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/tvTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="47dp"
-            android:text="@string/about_title"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-            android:textSize="20sp"
-            android:layout_alignParentTop="true"
-            android:layout_centerHorizontal="true" />
+            <TextView
+                android:id="@+id/tvTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:text="@string/about_title"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                android:textSize="20sp" />
 
-        <TextView
-            android:id="@+id/tvDiagramTitle"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="26dp"
-            android:text="@string/about_diagram_title"
-            android:textAppearance="@style/TextAppearance.AppCompat.Headline"
-            android:textSize="20sp"
-            android:layout_below="@+id/tvContent"
-            android:layout_alignLeft="@+id/tvTitle"
-            android:layout_alignStart="@+id/tvTitle"
-            android:layout_marginLeft="7dp"
-            android:layout_marginStart="7dp" />
+            <TextView
+                android:id="@+id/tvContent"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvTitle"
+                android:layout_marginLeft="@dimen/fab_margin"
+                android:layout_marginRight="@dimen/fab_margin"
+                android:layout_marginTop="6dp"
+                android:textSize="16sp" />
 
-        <ImageView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            app:srcCompat="@drawable/diagram_macro"
-            android:id="@+id/imageView"
-            android:layout_below="@+id/tvDiagramTitle"
-            android:layout_alignLeft="@+id/tvTitle"
-            android:layout_alignStart="@+id/tvTitle"
-            android:layout_alignEnd="@id/tvTitle"
-            android:layout_alignRight="@id/tvTitle"
-            android:cropToPadding="false"
-            android:adjustViewBounds="false" />
+            <TextView
+                android:id="@+id/tvDiagramTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/tvContent"
+                android:layout_centerHorizontal="true"
+                android:layout_marginTop="19dp"
+                android:text="@string/about_diagram_title"
+                android:textAppearance="@style/TextAppearance.AppCompat.Headline"
+                android:textSize="20sp" />
 
-    </RelativeLayout>
+            <ImageView
+                android:id="@+id/ivDiagram"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:layout_below="@+id/tvDiagramTitle"
+                android:layout_alignEnd="@id/tvTitle"
+                android:layout_alignLeft="@+id/tvTitle"
+                android:layout_alignRight="@id/tvTitle"
+                android:layout_alignStart="@+id/tvTitle"
+                android:layout_marginTop="12dp"
+                android:adjustViewBounds="true"
+                android:cropToPadding="true"
+                app:srcCompat="@drawable/diagram_macro" />
+
+            <TextView
+                android:text="@string/about_diagram_subtitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@android:color/tertiary_text_light"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:layout_below="@+id/ivDiagram"
+                android:id="@+id/tvDiagramSubtitle"
+                />
+
+        </RelativeLayout>
+
+    </ScrollView>
 
 </layout>

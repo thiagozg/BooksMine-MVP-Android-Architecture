@@ -31,5 +31,6 @@
         <item>- Android Support Libs</item>
         <item>- Parceler</item>
     </string-array>
-    <string name="about_diagram_title">Macro Architecture Diagram</string>
+    <string name="about_diagram_title">Architecture Diagram</string>
+    <string name="about_diagram_subtitle">(Click twice to Zoom In)</string>
 </resources>

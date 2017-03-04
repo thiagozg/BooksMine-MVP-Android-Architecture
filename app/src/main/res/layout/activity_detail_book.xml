@@ -27,7 +27,8 @@
                 android:id="@+id/ivCover"
                 android:layout_width="120dp"
                 android:layout_height="160dp"
-                android:src="@{book.volumeInfo.imageLinks.thumbnail}" />
+                android:src="@{book.volumeInfo.imageLinks.thumbnail}"
+                android:layout_marginBottom="20dp"/>
 
             <TextView
                 android:id="@+id/tvTitle"

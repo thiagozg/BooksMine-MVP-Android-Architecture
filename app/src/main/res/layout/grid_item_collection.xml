@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android">
+    <data>
+        <import type="br.com.booksmine.model.realm.util.RealmUtil" />
+        <variable
+            name="book"
+            type="br.com.booksmine.model.realm.po.RealmBook" />
+    </data>
+
+    <RelativeLayout
+        android:id="@+id/rlGrid"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:background="?attr/selectableItemBackground"
+        android:padding="8dp">
+
+        <FrameLayout
+            android:id="@+id/flCover"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <ImageView
+                android:id="@+id/ivCover"
+                android:layout_width="120dp"
+                android:layout_height="150dp"
+                android:layout_gravity="center_horizontal"
+                android:src="@{book.smallThumbnail}"
+                />
+
+        </FrameLayout>
+
+        <TextView
+            android:id="@+id/tvTitle"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/flCover"
+            android:gravity="center_horizontal"
+            android:layout_marginTop="4dp"
+            android:textStyle="bold"
+            android:ellipsize="end"
+            android:maxLines="3"
+            android:text="@{book.title}"
+            />
+
+        <TextView
+            android:id="@+id/tvPublishedDate"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_below="@id/tvTitle"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:text="@{book.publishedDate}"
+            />
+
+        <TextView
+            android:id="@+id/tvAuthors"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_horizontal"
+            android:layout_below="@id/tvPublishedDate"
+            android:ellipsize="end"
+            android:maxLines="5"
+            android:text="@{RealmUtil.realmListToString(book.authors)}"
+            />
+
+    </RelativeLayout>
+
+</layout>

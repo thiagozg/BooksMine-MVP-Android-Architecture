@@ -4,9 +4,10 @@ import android.content.Context;
 import android.databinding.DataBindingUtil;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+import android.widget.RelativeLayout;
 
 import br.com.booksmine.R;
-import br.com.booksmine.databinding.GridItemViewBinding;
+import br.com.booksmine.databinding.GridItemCollectionBinding;
 import br.com.booksmine.model.pojo.Book;
 import br.com.booksmine.model.realm.po.RealmBook;
 import br.com.booksmine.model.realm.util.RealmUtil;
@@ -42,9 +43,9 @@ public class CollectionRecyclerViewAdapter extends
 
     @Override
     public ViewHolder onCreateRealmViewHolder(ViewGroup parent, int viewType) {
-        GridItemViewBinding binding = DataBindingUtil.inflate(
+        GridItemCollectionBinding binding = DataBindingUtil.inflate(
                 LayoutInflater.from(parent.getContext()),
-                R.layout.grid_item_view,
+                R.layout.grid_item_collection,
                 parent,
                 false
         );
@@ -79,17 +80,33 @@ public class CollectionRecyclerViewAdapter extends
     @Override
     public void onBindRealmViewHolder(ViewHolder holder, int position) {
         RealmBook realmBook = realmResults.get(position);
+
+        if ("".equals(realmBook.getPublishedDate())
+                || realmBook.getPublishedDate() == null)
+            holder.removeView(2);
+
         holder.binding.setBook(realmBook);
         holder.binding.executePendingBindings();
     }
 
     public class ViewHolder extends RealmViewHolder {
 
-        GridItemViewBinding binding;
+        GridItemCollectionBinding binding;
 
-        public ViewHolder(GridItemViewBinding binding) {
+        public ViewHolder(GridItemCollectionBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
+        }
+
+        public void removeView(int position) {
+            binding.rlGrid.removeView(binding.rlGrid.getChildAt(position));
+            RelativeLayout.LayoutParams layoutParams = new RelativeLayout.LayoutParams(
+                    ViewGroup.LayoutParams.WRAP_CONTENT,
+                    ViewGroup.LayoutParams.WRAP_CONTENT
+            );
+            layoutParams.addRule(RelativeLayout.BELOW, this.binding.tvTitle.getId());
+            layoutParams.addRule(RelativeLayout.CENTER_HORIZONTAL);
+            this.binding.tvAuthors.setLayoutParams(layoutParams);
         }
 
     }
