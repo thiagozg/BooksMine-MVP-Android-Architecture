@@ -8,7 +8,6 @@ import br.com.booksmine.model.http.GoogleBooksAPI;
 import br.com.booksmine.model.pojo.SearchResult;
 import br.com.booksmine.mvp.GoogleBookMVP;
 import rx.Observable;
-import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
 import rx.schedulers.Schedulers;
 
@@ -33,16 +32,16 @@ public class GoogleBooksPresenter implements GoogleBookMVP.Presenter {
     @Override
     public void searchListOfBooks(String query) {
         Observable<SearchResult> result = model.searchListOfBooks(query);
-        Subscription subscription = result
-                .subscribeOn(Schedulers.io())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        searchResult -> EventBus.getDefault().postSticky(searchResult),
-                        throwable -> {
-                            view.showError();
-                            throwable.printStackTrace();
-                        },
-                        () -> Log.d("LOG", "searchListOfBooks complete!")
-                );
+        result
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                    searchResult -> EventBus.getDefault().postSticky(searchResult),
+                    throwable -> {
+                        view.showError();
+                        throwable.printStackTrace();
+                    },
+                    () -> Log.d("LOG", "searchListOfBooks complete!")
+            );
     }
 }

@@ -9,9 +9,7 @@ import br.com.booksmine.model.realm.po.RealmBook;
 import br.com.booksmine.mvp.CollectionMVP;
 import io.realm.RealmResults;
 import rx.Observable;
-import rx.Subscription;
 import rx.android.schedulers.AndroidSchedulers;
-import rx.schedulers.Schedulers;
 
 /**
  * Developed by.:   @thiagozg on 23/02/2017.
@@ -33,17 +31,17 @@ public class MyCollectionPresenter implements CollectionMVP.GridPresenter {
     @Override
     public void getMyCollection() {
         Observable<RealmResults<RealmBook>> results = this.model.getCollection();
-        Subscription subscription = results
-                .subscribeOn(AndroidSchedulers.mainThread())
-                .observeOn(AndroidSchedulers.mainThread())
-                .subscribe(
-                        realmResults -> EventBus.getDefault().postSticky(realmResults),
-                        throwable -> {
-                            view.showError();
-                            throwable.printStackTrace();
-                        },
-                        () -> Log.d("LOG", "getMyCollection complete!")
-                );
+        results
+            .subscribeOn(AndroidSchedulers.mainThread())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe(
+                    realmResults -> EventBus.getDefault().postSticky(realmResults),
+                    throwable -> {
+                        view.showError();
+                        throwable.printStackTrace();
+                    },
+                    () -> Log.d("LOG", "getMyCollection complete!")
+            );
     }
 
     @Override

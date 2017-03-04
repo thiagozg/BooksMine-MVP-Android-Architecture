@@ -3,7 +3,6 @@ package br.com.booksmine.mvp;
 import android.view.View;
 
 import br.com.booksmine.model.pojo.Book;
-import br.com.booksmine.model.pojo.SearchResult;
 import br.com.booksmine.model.realm.po.RealmBook;
 import io.realm.RealmResults;
 import rx.Observable;

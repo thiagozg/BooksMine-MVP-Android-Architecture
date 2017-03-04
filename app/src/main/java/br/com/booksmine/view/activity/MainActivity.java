@@ -28,13 +28,12 @@ import br.com.booksmine.view.listener.LongClickListener;
  * GitHub.:         https://github.com/thiagozg/
  * Google Play.:    https://play.google.com/store/apps/developer?id=Thiago+Giacomini
  */
-
 public class MainActivity extends AppCompatActivity
-//        implements SearchView.OnQueryTextListener,
-        implements
+        implements SearchView.OnQueryTextListener,
                     ClickListener, LongClickListener {
 
     public static final String SEARH_ACTIVE = "searhActive";
+
     private SearchView searchView;
     private MyCollectionFragment myCollectionFragment;
 
@@ -60,7 +59,6 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
-    /*
     @Override
     public boolean onQueryTextChange(String query) {
         return false;
@@ -83,7 +81,6 @@ public class MainActivity extends AppCompatActivity
         this.searchView.clearFocus();
         return true;
     }
-    */
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -104,31 +101,7 @@ public class MainActivity extends AppCompatActivity
                     }
                 });
         this.searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-//        this.searchView.setOnQueryTextListener(this);
-        this.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
-            @Override
-            public boolean onQueryTextSubmit(String query) {
-                getIntent().putExtra(SEARH_ACTIVE, true);
-                GoogleBooksListFragment bookListFragment = GoogleBooksListFragment.getViewInstance();
-
-                if (!bookListFragment.isVisible() || !bookListFragment.isResumed()) {
-                    getSupportFragmentManager()
-                            .beginTransaction()
-                            .replace(R.id.fragment_list, bookListFragment, "searchList")
-                            .commit();
-
-                    bookListFragment.searhByQuery(query);
-                }
-
-//                this.searchView.clearFocus();
-                return true;
-            }
-
-            @Override
-            public boolean onQueryTextChange(String newText) {
-                return false;
-            }
-        });
+        this.searchView.setOnQueryTextListener(this);
 
         return true;
     }
