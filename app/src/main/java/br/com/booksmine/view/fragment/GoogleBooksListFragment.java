@@ -57,8 +57,6 @@ public class GoogleBooksListFragment extends Fragment
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
         listBooks = new ArrayList<>();
-
-        EventBus.getDefault().register(this);
     }
 
     @Nullable
@@ -79,6 +77,12 @@ public class GoogleBooksListFragment extends Fragment
         });
 
         return binding.getRoot();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
     }
 
     @Override
@@ -122,8 +126,8 @@ public class GoogleBooksListFragment extends Fragment
     }
 
     @Override
-    public void onDestroyView() {
-        super.onDestroyView();
+    public void onPause() {
+        super.onPause();
         EventBus.getDefault().unregister(this);
     }
 }

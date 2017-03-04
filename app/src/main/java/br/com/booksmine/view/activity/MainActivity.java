@@ -30,12 +30,13 @@ import br.com.booksmine.view.listener.LongClickListener;
  */
 
 public class MainActivity extends AppCompatActivity
-        implements SearchView.OnQueryTextListener,
+//        implements SearchView.OnQueryTextListener,
+        implements
                     ClickListener, LongClickListener {
 
+    public static final String SEARH_ACTIVE = "searhActive";
     private SearchView searchView;
     private MyCollectionFragment myCollectionFragment;
-    private boolean searhActive;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -51,8 +52,7 @@ public class MainActivity extends AppCompatActivity
     }
 
     private void showMyCollection() {
-//        if (!this.searhActive) {
-        if (!getIntent().getBooleanExtra("searhActive", false)) {
+        if (!getIntent().getBooleanExtra(SEARH_ACTIVE, false)) {
             getSupportFragmentManager()
                     .beginTransaction()
                     .replace(R.id.fragment_list, myCollectionFragment, "myCollection")
@@ -60,6 +60,7 @@ public class MainActivity extends AppCompatActivity
         }
     }
 
+    /*
     @Override
     public boolean onQueryTextChange(String query) {
         return false;
@@ -67,9 +68,7 @@ public class MainActivity extends AppCompatActivity
 
     @Override
     public boolean onQueryTextSubmit(String query) {
-        this.searchView.clearFocus();
-        this.searhActive = true;
-        getIntent().putExtra("searhActive", true);
+        getIntent().putExtra(SEARH_ACTIVE, true);
         GoogleBooksListFragment bookListFragment = GoogleBooksListFragment.getViewInstance();
 
         if (!bookListFragment.isVisible() || !bookListFragment.isResumed()) {
@@ -77,11 +76,14 @@ public class MainActivity extends AppCompatActivity
                     .beginTransaction()
                     .replace(R.id.fragment_list, bookListFragment, "searchList")
                     .commit();
+
+            bookListFragment.searhByQuery(query);
         }
 
-        bookListFragment.searhByQuery(query);
+        this.searchView.clearFocus();
         return true;
     }
+    */
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -96,13 +98,37 @@ public class MainActivity extends AppCompatActivity
                     }
                     @Override
                     public boolean onMenuItemActionCollapse(MenuItem menuItem) {
-                        searhActive = false;
+                        getIntent().putExtra(SEARH_ACTIVE, false);
                         showMyCollection();
                         return true;
                     }
                 });
         this.searchView = (SearchView) MenuItemCompat.getActionView(searchItem);
-        this.searchView.setOnQueryTextListener(this);
+//        this.searchView.setOnQueryTextListener(this);
+        this.searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                getIntent().putExtra(SEARH_ACTIVE, true);
+                GoogleBooksListFragment bookListFragment = GoogleBooksListFragment.getViewInstance();
+
+                if (!bookListFragment.isVisible() || !bookListFragment.isResumed()) {
+                    getSupportFragmentManager()
+                            .beginTransaction()
+                            .replace(R.id.fragment_list, bookListFragment, "searchList")
+                            .commit();
+
+                    bookListFragment.searhByQuery(query);
+                }
+
+//                this.searchView.clearFocus();
+                return true;
+            }
+
+            @Override
+            public boolean onQueryTextChange(String newText) {
+                return false;
+            }
+        });
 
         return true;
     }
@@ -138,4 +164,22 @@ public class MainActivity extends AppCompatActivity
         startActivity(new Intent(this, AboutActivity.class));
     }
 
+    /**
+     * Quando acontece a busca, e a tela é rodada, é preciso lidar com o botão voltar para
+     * que o aplicativo não seja fechado, pois quando a activity ser recriada
+     * o onMenuItemActionCollapse não será mais chamado ao pressionar o botão boltar.
+     */
+    @Override
+    public void onBackPressed() {
+        if (getIntent().getBooleanExtra(SEARH_ACTIVE, false)) {
+            getSupportFragmentManager()
+                    .beginTransaction()
+                    .replace(R.id.fragment_list, myCollectionFragment, "myCollection")
+                    .commit();
+
+            getIntent().putExtra(SEARH_ACTIVE, false);
+        } else {
+            super.onBackPressed();
+        }
+    }
 }

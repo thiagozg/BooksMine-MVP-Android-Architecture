@@ -55,7 +55,6 @@ public class MyCollectionFragment extends Fragment
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setRetainInstance(true);
-        EventBus.getDefault().register(this);
     }
 
     @Nullable
@@ -72,8 +71,9 @@ public class MyCollectionFragment extends Fragment
     }
 
     @Override
-    public void onResume() {
-        super.onResume();
+    public void onStart() {
+        super.onStart();
+        EventBus.getDefault().register(this);
         presenter.getMyCollection();
     }
 
@@ -81,7 +81,6 @@ public class MyCollectionFragment extends Fragment
     public void onEvent(RealmResults<RealmBook> realmBooks) {
         this.realmBooks = realmBooks;
         this.updateGridView();
-        EventBus.getDefault().removeStickyEvent(this);
     }
 
     @Override
@@ -119,10 +118,15 @@ public class MyCollectionFragment extends Fragment
     }
 
     @Override
+    public void onPause() {
+        super.onPause();
+        EventBus.getDefault().unregister(this);
+    }
+
+    @Override
     public void onDestroyView() {
         super.onDestroyView();
         presenter.closeRealm();
-        EventBus.getDefault().unregister(this);
     }
 
 }
