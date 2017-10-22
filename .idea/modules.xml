@@ -3,7 +3,9 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/BooksMine.iml" filepath="$PROJECT_DIR$/BooksMine.iml" />
+      <module fileurl="file://C:\Users\thiagozg\Projects\Android\BooksMine\BooksMine.iml" filepath="C:\Users\thiagozg\Projects\Android\BooksMine\BooksMine.iml" />
       <module fileurl="file://$PROJECT_DIR$/app/app.iml" filepath="$PROJECT_DIR$/app/app.iml" />
+      <module fileurl="file://C:\Users\thiagozg\Projects\Android\BooksMine\app\app.iml" filepath="C:\Users\thiagozg\Projects\Android\BooksMine\app\app.iml" />
     </modules>
   </component>
 </project>

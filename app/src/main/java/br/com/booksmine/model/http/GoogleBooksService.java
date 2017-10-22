@@ -1,9 +1,12 @@
 package br.com.booksmine.model.http;
 
 import br.com.booksmine.model.pojo.SearchResult;
-import retrofit2.http.GET;
-import retrofit2.http.Query;
+import br.com.booksmine.mvp.GoogleBookMVP;
+import retrofit2.Retrofit;
+import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory;
+import retrofit2.converter.gson.GsonConverterFactory;
 import rx.Observable;
+import rx.schedulers.Schedulers;
 
 /**
  * Developed by.:   @thiagozg on 29/01/2017.
@@ -12,11 +15,23 @@ import rx.Observable;
  * Google Play.:    https://play.google.com/store/apps/developer?id=Thiago+Giacomini
  */
 
-public interface GoogleBooksService {
+public class GoogleBooksService implements GoogleBookMVP.Model {
 
-    public static final String URL_BASE = "https://www.googleapis.com/books/v1/volumes/";
+    public Observable<SearchResult> searchListOfBooks(String query) {
 
-    @GET("./")
-    Observable<SearchResult> searchBook(@Query("q") String q);
+        RxJavaCallAdapterFactory rxAdapter =
+                RxJavaCallAdapterFactory.createWithScheduler(Schedulers.io());
+
+        Retrofit retrofit = new Retrofit.Builder()
+                .baseUrl(GoogleBooksAPI.URL_BASE)
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(rxAdapter)
+                .build();
+
+        GoogleBooksAPI googleBooksService = retrofit.create(GoogleBooksAPI.class);
+        Observable<SearchResult> searchResultObservable = googleBooksService.searchBook(query);
+
+        return searchResultObservable;
+    }
 
 }

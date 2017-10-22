@@ -4,7 +4,7 @@ import android.util.Log;
 
 import org.greenrobot.eventbus.EventBus;
 
-import br.com.booksmine.model.http.GoogleBooksAPI;
+import br.com.booksmine.model.http.GoogleBooksService;
 import br.com.booksmine.model.pojo.SearchResult;
 import br.com.booksmine.mvp.GoogleBookMVP;
 import rx.Observable;
@@ -26,7 +26,7 @@ public class GoogleBooksPresenter implements GoogleBookMVP.Presenter {
 
     public GoogleBooksPresenter(GoogleBookMVP.View view) {
         this.view = view;
-        this.model = new GoogleBooksAPI();
+        this.model = new GoogleBooksService();
     }
 
     @Override
