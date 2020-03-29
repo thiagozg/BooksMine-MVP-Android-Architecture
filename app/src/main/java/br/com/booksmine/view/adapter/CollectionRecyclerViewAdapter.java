@@ -2,6 +2,8 @@ package br.com.booksmine.view.adapter;
 
 import android.content.Context;
 import android.databinding.DataBindingUtil;
+import android.support.annotation.NonNull;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
 import android.widget.RelativeLayout;
@@ -13,9 +15,7 @@ import br.com.booksmine.model.realm.po.RealmBook;
 import br.com.booksmine.model.realm.util.RealmUtil;
 import br.com.booksmine.view.listener.ClickListener;
 import br.com.booksmine.view.listener.LongClickListener;
-import io.realm.RealmBasedRecyclerViewAdapter;
 import io.realm.RealmResults;
-import io.realm.RealmViewHolder;
 
 /**
  * Developed by.:   @thiagozg on 23/02/2017.
@@ -24,25 +24,29 @@ import io.realm.RealmViewHolder;
  * Google Play.:    https://play.google.com/store/apps/developer?id=Thiago+Giacomini
  */
 
-public class CollectionRecyclerViewAdapter extends
-        RealmBasedRecyclerViewAdapter<RealmBook, CollectionRecyclerViewAdapter.ViewHolder> {
+public class CollectionRecyclerViewAdapter extends RecyclerView.Adapter<CollectionRecyclerViewAdapter.ViewHolder> {
+
+    /**
+     * app:rrvIsRefreshable="false"
+     * app:rrvLayoutType="Grid"
+     * app:rrvGridLayoutSpanCount="2"
+     */
 
     private RealmResults<RealmBook> realmResults;
     private LongClickListener longClickListener;
     private ClickListener clickListener;
 
-    public CollectionRecyclerViewAdapter(Context context, RealmResults<RealmBook> realmResults,
-                                         boolean automaticUpdate, boolean animateIdType,
+    public CollectionRecyclerViewAdapter(RealmResults<RealmBook> realmResults,
                                          LongClickListener longClickListener,
                                          ClickListener clickListener) {
-        super(context, realmResults, automaticUpdate, animateIdType);
         this.realmResults = realmResults;
         this.longClickListener = longClickListener;
         this.clickListener = clickListener;
     }
 
+    @NonNull
     @Override
-    public ViewHolder onCreateRealmViewHolder(ViewGroup parent, int viewType) {
+    public ViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int holderPosition) {
         GridItemCollectionBinding binding = DataBindingUtil.inflate(
                 LayoutInflater.from(parent.getContext()),
                 R.layout.grid_item_collection,
@@ -73,12 +77,8 @@ public class CollectionRecyclerViewAdapter extends
         return holder;
     }
 
-    private RealmBook getRealmBook(int position) {
-        return this.realmResults.get(position);
-    }
-
     @Override
-    public void onBindRealmViewHolder(ViewHolder holder, int position) {
+    public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         RealmBook realmBook = realmResults.get(position);
 
         if ("".equals(realmBook.getPublishedDate())
@@ -89,11 +89,20 @@ public class CollectionRecyclerViewAdapter extends
         holder.binding.executePendingBindings();
     }
 
-    public class ViewHolder extends RealmViewHolder {
+    @Override
+    public int getItemCount() {
+        return realmResults.size();
+    }
+
+    private RealmBook getRealmBook(int position) {
+        return this.realmResults.get(position);
+    }
+
+    public class ViewHolder extends RecyclerView.ViewHolder {
 
         GridItemCollectionBinding binding;
 
-        public ViewHolder(GridItemCollectionBinding binding) {
+        ViewHolder(GridItemCollectionBinding binding) {
             super(binding.getRoot());
             this.binding = binding;
         }

@@ -55,7 +55,7 @@ public final class RealmUtil {
         StringBuilder builder = new StringBuilder();
         builder.append('[');
         for (int i = 0; ; i++) {
-            builder.append(String.valueOf(realmList.get(i).getValue()));
+            builder.append(realmList.get(i).getValue());
             if (i == iMax)
                 return builder.append(']').toString();
             builder.append(", ");

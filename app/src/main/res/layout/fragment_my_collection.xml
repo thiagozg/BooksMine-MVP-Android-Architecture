@@ -6,16 +6,12 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <co.moonmonkeylabs.realmrecyclerview.RealmRecyclerView
+        <android.support.v7.widget.RecyclerView
             android:id="@+id/rvCollection"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:paddingTop="6dp"
-            android:paddingBottom="6dp"
-            app:rrvIsRefreshable="false"
-            app:rrvLayoutType="Grid"
-            app:rrvGridLayoutSpanCount="2"
-            />
+            android:paddingBottom="6dp" />
 
         <android.support.design.widget.FloatingActionButton
             android:id="@+id/fbAbout"

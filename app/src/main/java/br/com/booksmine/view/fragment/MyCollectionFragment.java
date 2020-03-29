@@ -1,10 +1,10 @@
 package br.com.booksmine.view.fragment;
 
 import android.databinding.DataBindingUtil;
-import android.databinding.tool.Binding;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -16,7 +16,6 @@ import org.greenrobot.eventbus.ThreadMode;
 
 import br.com.booksmine.R;
 import br.com.booksmine.databinding.FragmentMyCollectionBinding;
-import br.com.booksmine.model.pojo.SearchResult;
 import br.com.booksmine.model.realm.po.RealmBook;
 import br.com.booksmine.mvp.CollectionMVP;
 import br.com.booksmine.presenter.MyCollectionPresenter;
@@ -88,7 +87,7 @@ public class MyCollectionFragment extends Fragment
         if (this.realmBooks != null) {
 
             CollectionRecyclerViewAdapter adapter = new CollectionRecyclerViewAdapter(
-                    getActivity(), this.realmBooks, true, true,
+                    this.realmBooks,
                     realmBook -> {
                         if (getActivity() instanceof LongClickListener) {
                             LongClickListener listener = (LongClickListener) getActivity();
@@ -102,7 +101,7 @@ public class MyCollectionFragment extends Fragment
                         }
                     }
             );
-
+            this.binding.rvCollection.setLayoutManager(new GridLayoutManager(requireContext(), 2));
             this.binding.rvCollection.setAdapter(adapter);
         }
     }
